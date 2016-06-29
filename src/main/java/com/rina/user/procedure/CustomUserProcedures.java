@@ -26,6 +26,13 @@ public class CustomUserProcedures {
     @Context
     public Log log;
 
+    /**
+     * Custom User Procedure: Given a node's label and a node property, return the node
+     * @param label
+     * @param key
+     * @param value
+     * @return
+     */
     @Procedure("get.nodes.by.property")
     public Stream<NodeResult> searchByProperty(@Name("label") String label, @Name("key") String key, @Name("value") String value)
     {
@@ -36,6 +43,11 @@ public class CustomUserProcedures {
         return Stream.of(new NodeResult(nodes.next()));
     }
 
+    /**
+     * Custom User Procedure: Given a node label, return all property keys
+     * @param label
+     * @return
+     */
     @Procedure("get.keys.by.label")
     public Stream<StringResult> getKeysByLabel(@Name("label") String label)
     {

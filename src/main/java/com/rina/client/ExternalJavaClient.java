@@ -4,6 +4,7 @@ import org.neo4j.driver.v1.*;
 
 
 /**
+ * Executing Cypher queries from external java client.
  * Created by rinacao on 6/28/16.
  */
 public class ExternalJavaClient {

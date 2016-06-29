@@ -28,6 +28,9 @@ public class CustomUserProceduresTest {
         REST_REQUEST = new RestRequest(server.httpURI());
     }
 
+    /**
+     * Test Cypher query (user procedure) call from bolt driver
+     */
     @Test
     public void testCustomUserProceduresFromBoltDriver () {
         // In a try-block, to make sure we close the driver after the test
@@ -48,6 +51,11 @@ public class CustomUserProceduresTest {
         }
     }
 
+    /**
+     * This is the Legacy Cypher HTTP Endpoint
+     * http://neo4j.com/docs/rest-docs/current/#rest-api-use-parameters
+     * @throws Exception
+     */
     @Test
     public void testCustomUserProceduresFromHttpEndpoint () throws Exception {
 

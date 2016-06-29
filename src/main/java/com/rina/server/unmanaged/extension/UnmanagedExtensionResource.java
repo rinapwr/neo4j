@@ -16,9 +16,6 @@ public class UnmanagedExtensionResource
 {
     private final GraphDatabaseService database;
 
-    @org.neo4j.procedure.Context
-    public Log log;
-
     public UnmanagedExtensionResource(@Context GraphDatabaseService database )
     {
         this.database = database;

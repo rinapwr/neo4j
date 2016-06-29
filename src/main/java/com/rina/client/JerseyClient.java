@@ -13,6 +13,7 @@ import java.util.Base64;
 
 
 /**
+ * Example Jersey Client code for GET and POST requests
  * Created by rinacao on 6/28/16.
  */
 public class JerseyClient {
@@ -52,7 +53,7 @@ public class JerseyClient {
     }
 
     /**
-     * Neo4j access using Jersey Client POST
+     * Neo4j access using Jersey Client POST to the Legacy Cypher HTTP Endpoint
      */
     public static void accessNeo4jUsing_jersey_post() {
         javax.ws.rs.client.Client client = ResteasyClientBuilder.newClient();

@@ -19,6 +19,8 @@ import java.util.stream.Stream;
 import static org.neo4j.helpers.collection.MapUtil.stringMap;
 
 /**
+ * Example Code copied from: https://github.com/neo4j-examples/neo4j-procedure-template
+ *
  * This is an example showing how you could expose Neo4j's full text indexes as
  * two procedures - one for updating indexes, and one for querying by label and
  * the lucene query language.

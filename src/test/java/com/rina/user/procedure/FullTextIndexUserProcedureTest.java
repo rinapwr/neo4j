@@ -9,6 +9,9 @@ import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
 import static org.neo4j.driver.v1.Values.parameters;
 
+/**
+ * Example Code copied from: https://github.com/neo4j-examples/neo4j-procedure-template
+ */
 public class FullTextIndexUserProcedureTest
 {
     // This rule starts a Neo4j instance for us
