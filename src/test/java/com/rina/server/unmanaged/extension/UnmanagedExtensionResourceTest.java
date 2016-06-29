@@ -23,7 +23,7 @@ public class UnmanagedExtensionResourceTest
     }
 
     @Test
-    public void testHelloWorldExtension_GET ()
+    public void testUnmanagedExtension_GET ()
     {
         JaxRsResponse response = REST_REQUEST.get("test/unmanagedExt/get");
         Assert.assertEquals(200, response.getStatus());
@@ -31,7 +31,7 @@ public class UnmanagedExtensionResourceTest
     }
 
     @Test
-    public void testHelloWorldExtension_GetGraphData() throws Exception
+    public void testUnmanagedExtension_GetGraphData() throws Exception
     {
         // create node in db
         JSONObject json = new JSONObject();
@@ -50,7 +50,7 @@ public class UnmanagedExtensionResourceTest
     }
 
     @Test
-    public void testHelloWorldExtension_POST ()
+    public void testUnmanagedExtension_POST ()
     {
         String username = "ABCDE";
         JaxRsResponse response = REST_REQUEST.post("test/unmanagedExt/post", username);
@@ -59,7 +59,7 @@ public class UnmanagedExtensionResourceTest
     }
 
     @Test
-    public void testHelloWorldExtension_jsonPOST ()
+    public void testUnmanagedExtension_jsonPOST ()
     {
         JSONObject json = new JSONObject();
         try {
