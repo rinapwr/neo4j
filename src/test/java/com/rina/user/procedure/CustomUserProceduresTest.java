@@ -1,6 +1,7 @@
 package com.rina.user.procedure;
 
 import junit.framework.Assert;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -76,5 +77,6 @@ public class CustomUserProceduresTest {
         response = REST_REQUEST.post("db/data/cypher", json.toString());
         assertEquals(200, response.getStatus());
 
+        response.close();
     }
 }

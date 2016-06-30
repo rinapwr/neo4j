@@ -28,6 +28,7 @@ public class UnmanagedExtensionResourceTest
         JaxRsResponse response = REST_REQUEST.get("test/unmanagedExt/get");
         Assert.assertEquals(200, response.getStatus());
         Assert.assertEquals("Hello World, this is a GET test.", response.getEntity());
+        response.close();
     }
 
     @Test
@@ -35,17 +36,25 @@ public class UnmanagedExtensionResourceTest
     {
         // create node in db
         JSONObject json = new JSONObject();
+        JaxRsResponse response1 = null, response2 = null;
         try {
             json.put("query", "CREATE (a:Person {name:'Alice', age: 18}) RETURN a");
-            JaxRsResponse response1 = REST_REQUEST.post("db/data/cypher", json.toString());
+            response1 = REST_REQUEST.post("db/data/cypher", json.toString());
             Assert.assertEquals(200, response1.getStatus());
 
             // query for node
-            JaxRsResponse response2 = REST_REQUEST.get("test/unmanagedExt/getGraphData");
+            response2 = REST_REQUEST.get("test/unmanagedExt/getGraphData");
             Assert.assertEquals(200, response2.getStatus());
             System.out.println(response2.getEntity());
         } catch (Exception e) {
             System.out.println(e.getMessage());
+        } finally {
+            if (response1 != null){
+                response1.close();
+            }
+            if (response2 != null){
+                response2.close();
+            }
         }
     }
 
@@ -56,23 +65,27 @@ public class UnmanagedExtensionResourceTest
         JaxRsResponse response = REST_REQUEST.post("test/unmanagedExt/post", username);
         Assert.assertEquals(200, response.getStatus());
         Assert.assertEquals("Hello World, this is a POST test from user " + username, response.getEntity());
+        response.close();
     }
 
     @Test
     public void testUnmanagedExtension_jsonPOST ()
     {
         JSONObject json = new JSONObject();
+        JaxRsResponse response = null;
         try {
             json.put("name", "POST");
             json.put("inputType","JSON");
             json.put("x","y");
 
-            JaxRsResponse response = REST_REQUEST.post("test/unmanagedExt/postJson", json.toString());
+            response = REST_REQUEST.post("test/unmanagedExt/postJson", json.toString());
 
             Assert.assertEquals(200, response.getStatus());
             Assert.assertEquals("Data post: "+json.toString(), response.getEntity());
         } catch (Exception e) {
             System.out.println(e.getMessage());
+        } finally {
+            response.close();
         }
     }
 }
