@@ -1,16 +1,9 @@
 package com.rina.client;
 
-import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
-import org.json.JSONObject;
-
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.Invocation;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import java.util.Base64;
-
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
 /**
  * Example Jersey Client code for GET and POST requests
@@ -18,9 +11,7 @@ import java.util.Base64;
  */
 public class JerseyClient {
 
-    private static String base64encoded = Base64.getEncoder().encodeToString("neo4j:Test123".getBytes());
-
-    public static void main (String [] args) {
+    public static void main(String[] args) {
         accessNeo4jUsing_jersey_get();
         accessNeo4jUsing_jersey_post();
     }
@@ -29,47 +20,39 @@ public class JerseyClient {
      * Neo4j access using Jersey Client GET
      */
     public static void accessNeo4jUsing_jersey_get() {
-        javax.ws.rs.client.Client client = ResteasyClientBuilder.newClient();
+        Client client = Client.create();
+        client.addFilter(new HTTPBasicAuthFilter("neo4j", "Test123"));
+        WebResource webResource = client.resource("http://localhost:7474/unmanagedExt/unmanagedExt/get");
 
-        WebTarget target = client.target("http://localhost:7474").path("/db/data/propertykeys");
+        ClientResponse response = webResource.type("application/text")
+                .get(ClientResponse.class);
 
-        Response resp = target.request()
-                .header(HttpHeaders.AUTHORIZATION, "Basic " + base64encoded)
-                .get(Response.class);
+        System.out.println("Output from Server .... \n");
+        String output = response.getEntity(String.class);
+        System.out.println(output);
 
-        System.out.println("Response code: " + resp.getStatus());
-        client.close();
-
-        // call unmanaged extension
-        javax.ws.rs.client.Client client1 = ResteasyClientBuilder.newClient();
-        WebTarget target1 = client1.target("http://localhost:7474").path("/unmanagedExt/unmanagedExt/get");
-
-        resp = target1.request()
-                .header(HttpHeaders.AUTHORIZATION, "Basic " + base64encoded)
-                .get(Response.class);
-
-        System.out.println("Response code: " + resp.getStatus());
-        client1.close();
+        response.close();
+        client.destroy();
     }
 
     /**
      * Neo4j access using Jersey Client POST to the Legacy Cypher HTTP Endpoint
      */
     public static void accessNeo4jUsing_jersey_post() {
-        javax.ws.rs.client.Client client = ResteasyClientBuilder.newClient();
+        Client client = Client.create();
+        client.addFilter(new HTTPBasicAuthFilter("neo4j", "Test123"));
+        WebResource webResource = client.resource("http://localhost:7474/unmanagedExt/unmanagedExt/postJson");
 
-        WebTarget target = client.target("http://localhost:7474").path("/db/data/cypher");
+        String input = "{\"name\":\"ABC\"}";
 
-        Invocation.Builder invocationBuilder =  target.request(MediaType.APPLICATION_JSON)
-                .header(HttpHeaders.AUTHORIZATION, "Basic " + base64encoded);
+        ClientResponse response = webResource.type("application/json")
+                .post(ClientResponse.class, input);
 
-        JSONObject cypherQuery = new JSONObject();
-            cypherQuery.put("query", "CREATE (a:Person {name:'Charlie', age: 5}) RETURN a");
+        System.out.println("Output from Server .... \n");
+        String output = response.getEntity(String.class);
+        System.out.println(output);
 
-        Response response = invocationBuilder.post(Entity.entity(cypherQuery.toString(), MediaType.APPLICATION_JSON));
-
-        System.out.println("Response code: " + response.getStatus());
-
-        client.close();
+        response.close();
+        client.destroy();
     }
 }

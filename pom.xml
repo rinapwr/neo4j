@@ -126,6 +126,16 @@
       <artifactId>jersey-client</artifactId>
       <version>1.19</version>
     </dependency>
+    <dependency>
+    <groupId>org.neo4j.test</groupId>
+    <artifactId>neo4j-harness</artifactId>
+    <version>3.0.1</version>
+  </dependency>
+  <dependency>
+    <groupId>junit</groupId>
+    <artifactId>junit</artifactId>
+    <version>4.12</version>
+  </dependency>
 
   </dependencies>
 

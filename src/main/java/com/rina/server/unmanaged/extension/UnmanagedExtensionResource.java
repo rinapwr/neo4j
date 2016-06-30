@@ -2,7 +2,6 @@ package com.rina.server.unmanaged.extension;
 
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Result;
-import org.neo4j.logging.Log;
 import org.neo4j.string.UTF8;
 
 import javax.ws.rs.*;
@@ -38,6 +37,7 @@ public class UnmanagedExtensionResource
     }
 
     @POST
+    @Consumes(MediaType.APPLICATION_JSON)
     @Path( "/post" )
     public Response post( String name )
     {
